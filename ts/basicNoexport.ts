@@ -394,7 +394,7 @@ function BuildContainersRecursive(current_margin: number,
     let ret_: Container;
     let true_is_hor:boolean = false;
 
-    if (liefDirective.vertical !== undefined)
+    if (!liefDirective)
         true_is_hor = true;
 
     if ('margin' in liefDirective)

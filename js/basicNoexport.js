@@ -400,8 +400,15 @@ function BuildContainersRecursive(current_margin, liefDirective, liefDirectivesO
     var dictStart = starts();
     var ret_;
     var true_is_hor = false;
-    if (liefDirective.vertical !== undefined)
+    if (!liefDirective.vertical) {
+        console.log("Vertical Defined for " + liefDirective.id);
+        console.log(liefDirective);
         true_is_hor = true;
+    }
+    else {
+        console.log("Vertical Undefined for " + liefDirective.id);
+        console.log(liefDirective);
+    }
     if ('margin' in liefDirective)
         current_margin = liefDirective.margin;
     for (var _i = 0, _a = liefDirective.contains.split("|"); _i < _a.length; _i++) {
@@ -458,10 +465,10 @@ function directiveSetStyles(el, stylesObject) {
     for (var key in stylesObject)
         el['style'][key] = stylesObject[key];
 }
-var temp = BuildContainers();
-if (temp) {
-    use(temp.label);
-    startHandler();
+function start() {
+    var temp = BuildContainers();
+    if (temp) {
+        use(temp.label);
+        startHandler();
+    }
 }
-
-

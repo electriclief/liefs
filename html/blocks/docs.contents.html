@@ -1,0 +1,40 @@
+<span class="myheading">Docs - Liefs Basic Concepts</span><br><br>
+<span class="subheading">What is a lief Item?</span><br>
+An Item is a window on your webpage. Items always have a "start" attribute.<br>
+This attribute is either fixed, (Constant number of pixels ie: "120px")<br>
+or Variable. (Percentage of remaining Container ie"100%")<br>
+<br><span class="subheading">What is a lief Container?</span><br>
+A Container is a row/column of Items.  Containers can have 0 to any number of fixed
+Items in it.<br>
+Containers, by default are horizontal. To sepcify a Vertical Container, a vertical attribute must be assigned to non null.<br>
+The Variable Items must add up to 100%.  (one "100%", or two ["20%","80%"] or any combo so long as they add to 100%)<br>
+<br><span class="subheading">Simple Example:</span><br>
+We want to make our own web site with a menu, (Shown In Red) on the left, with a constant width of 200px,<br>
+and a main body secion to show our content (Shown In Blue) on the right.<br><br>
+<a href="/html/_TreeMain.html">See It work</a> then,
+<span style="color:red">(Ctrl-u) See the source of that page</span><br>
+<img src="/images/mysite_step1.png"/><br>
+So, we need Two Items, and One Container:<br>
+Lets call the First Item "Tree" and the second "Main"<br>
+Lets call the container "_TreeMain" - using an underscore to remind us it is a container, not an item.<br>
+We would simply code:<br>
+<pre  class="prettyprint lang-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;script src="/js/basicNoexport.js"&gt;&lt;/script&gt; &lt;!-- You must correctly link to this js file!!!! --&gt;
+    &lt;title&gt;Too Easy To Be True&lt;/title&gt;
+&lt;/head&gt;
+&lt;body onload="start()"&gt;                          &lt;!--you must put onload="start" here!!! or it will do nothing--&gt;
+&lt;liefs id="_TreeMain" contains="Tree|Main" &gt;&lt;/liefs&gt;             &lt;!-- created a container here --&gt;
+
+&lt;div id="Tree" start="200px" style="background-color:red"&gt;&lt;/div&gt; &lt;!-- created an Item here --&gt;
+&lt;div id="Main" start="100%" style="background-color:blue"&gt;&lt;/div&gt; &lt;!-- created an Item here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+Now all we have to do is fill our div tags with our content, and we can forget about the layout.
+Its all handled automatically.<br>
+Please <span style="color:red">(Ctrl-u)
+    See the source of this page</span> to see how easy it is.<a href="/html/_TreeMain.html">See It work</a><br><br><br>
