@@ -1,0 +1,21 @@
+div {
+    position: fixed;
+}
+
+#Tree {
+    background-color: lightpink;
+    background: url("../images/leafTree.png") no-repeat;
+    background-size:contain;
+}
+
+#Main {
+    background-color: lightgreen;
+    background: url("../images/leafMain.png") no-repeat;
+    background-size:contain;
+}
+
+#Header {
+    background-color: lightblue;
+    background: url("../images/leafHeader.png") no-repeat;
+    background-size:contain;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "liefs-layout-manager",
+  "version": "0.0.0",
+  "description": "Dynamic Layout Manager (Javascript)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stacy Lief Kelly",
+  "license": "ISC"
+}
