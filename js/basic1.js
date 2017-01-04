@@ -510,6 +510,7 @@ function start() {
 function loadDoc(eid, page) {
     var e = document.getElementById("c" + eid);
     if (e) {
+        console.log("Found " + eid);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -519,4 +520,6 @@ function loadDoc(eid, page) {
         xhttp.open("GET", page, true);
         xhttp.send();
     }
+    else
+        console.log("Not Found " + eid);
 }
