@@ -124,9 +124,9 @@ var hCont = h("HorCont","100%",     /* Use Default Margin */
 </body>
 </html>
 <script>
-    function condfunc() { return (document.getElementById('tdocs') === null); }
-    function dofunc() { document.getElementById('tdocs').setAttribute("checked", true); }
-    function waitForit() {if(condfunc()) window.setTimeout(waitForit, 100); else dofunc();}
+    function waitCondition() { return (document.getElementById('tdocs') === null); }
+    function waitThenDo() { document.getElementById('tdocs').setAttribute("checked", true); }
+    function waitForit() {if(waitCondition()) window.setTimeout(waitForit, 100); else waitThenDo();}
     waitForit();
 
     window.onload = function () {

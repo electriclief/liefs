@@ -101,6 +101,11 @@ For a more complicated example, extracting from <a  href="/js_example_1.html">Th
 </body>
 </html>
 <script>
+    function waitCondition() { return (document.getElementById('tdocs') === null); }
+    function waitThenDo() { document.getElementById('tdocs').setAttribute("checked", true); }
+    function waitForit() {if(waitCondition()) window.setTimeout(waitForit, 100); else waitThenDo();}
+    waitForit();
+    
     window.onload = function () {
         V("min", 4,
                 I("Header","40px"),
@@ -118,6 +123,5 @@ For a more complicated example, extracting from <a  href="/js_example_1.html">Th
 
         use("min");
         startHandler();
-        setTimeout(function(){document.getElementById('tdocs').setAttribute("checked", true);},100);
     }
 </script>
