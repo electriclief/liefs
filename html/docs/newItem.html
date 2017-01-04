@@ -10,22 +10,39 @@
     <link rel="stylesheet" type="text/css" href="/css/liefs.css"> <!-- standard css stuff -->
     <title>Liefs Layout Manager - Docs - newItem</title>
     <style>
-        #Header {background-color: lightgreen;position: fixed;font-size: 200%;line-height: inherit}
-        #menu {background-color: #c6ffb2;position: fixed;}
-        #Main {background-color: white;color:darkgreen;position: fixed;overflow: auto;background-size:contain;}
+        #Header {
+            background-color: lightgreen;
+            position: fixed;
+            font-size: 200%;
+            line-height: inherit
+        }
+
+        #menu {
+            background-color: #c6ffb2;
+            position: fixed;
+        }
+
+        #Main {
+            background-color: white;
+            color: darkgreen;
+            position: fixed;
+            overflow: auto;
+            background-size: contain;
+        }
     </style>
 </head>
 <body onload="start()">
 
 <div id="Header">{Docs Liefs_Layout-Manager=}</div>
 
-<div id="menu"><div id="cmenu"></div>
+<div id="menu">
+    <div id="cmenu"></div>
 </div>
 
 <div id="Main">
 
 
-    <h1>Function newItem()  -  (Lief Layout Manager)</h1>
+    <h1>Function newItem() - (Lief Layout Manager)</h1>
     <h2>Syntax (of Typescript Code)</h2>
 <pre class="prettyprint lang-js">
 function newItem(label: string, start: string|number, is_a_container: Container = null): Item
@@ -50,7 +67,8 @@ function newItem(label, start, /*optional*/ is_a_container)
     Start is either a constant value (in pixels) ie: "120px" or 120,<br>
     or a percentage of the Container (after constants assigned) ie "50%" or "100%"<br><br>
     <strong>is_a_container</strong><br>
-    Use this value ONLY if the Item, is also to be used as a <a href="/html/docs/newContainer.html">Container</a>. If so,
+    Use this value ONLY if the Item, is also to be used as a <a href="/html/docs/newContainer.html">Container</a>. If
+    so,
     the container goes here<br><br>
     <strong>Return value</strong><br>
     (Typescript) Item<br>
@@ -73,7 +91,8 @@ var y=newItem("Header", "100%");
   start: '100%',
   size: { x: 0, y: 0, width: 0, height: 0 } }
 
-var z=newItem("Middle","100%", newContainer("ContainerName",true,[w,x,y], 4)); /* see <a href="/html/docs/newContainer.html">Container</a> Docs */
+var z=newItem("Middle","100%", newContainer("ContainerName",true,[w,x,y], 4)); /* see <a
+        href="/html/docs/newContainer.html">Container</a> Docs */
 </pre>
     <h2>Abbreviations</h2>
 <pre class="prettyprint lang-js">
@@ -105,11 +124,16 @@ var hCont = h("HorCont","100%",     /* Use Default Margin */
 </body>
 </html>
 <script>
+    function condfunc() { return (document.getElementById('tdocs') === null); }
+    function dofunc() { document.getElementById('tdocs').setAttribute("checked", true); }
+    function waitForit() {if(condfunc()) window.setTimeout(waitForit, 100); else dofunc();}
+    waitForit();
+
     window.onload = function () {
         V("min", 4,
-                I("Header","40px"),
-                h("sdf","100%",
-                        I("menu","200px"),
+                I("Header", "40px"),
+                h("sdf", "100%",
+                        I("menu", "200px"),
                         I("Main", "100%")
                 )
         );
@@ -122,6 +146,5 @@ var hCont = h("HorCont","100%",     /* Use Default Margin */
 
         use("min");
         startHandler();
-        setTimeout(function(){document.getElementById('tdocs').setAttribute("checked", true);},100);
     }
 </script>
