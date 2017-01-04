@@ -8,8 +8,8 @@
     src: url("../fonts/Hojasplata.otf");
 }
 div {
-    position: fixed;
-}
+     position: fixed;
+ }
 
 .myheading {
     -webkit-box-sizing: content-box;
@@ -36,6 +36,15 @@ div {
     text-overflow: ellipsis;
 }
 
+#Header2 {
+    color: green;
+    background-color: lightgreen;
+    /*    background: url("../images/leafHeader.png") no-repeat; */
+    background-size:contain;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 64px;
+}
 
 #Header {
     font-family: "JungleRock";

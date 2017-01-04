@@ -11,7 +11,7 @@ The Variable Items must add up to 100%.  (one "100%", or two ["20%","80%"] or an
 <br><span class="subheading">Simple Example:</span><br>
 We want to make our own web site with a menu, (Shown In Red) on the left, with a constant width of 200px,<br>
 and a main body secion to show our content (Shown In Blue) on the right.<br><br>
-<a href="/html/_TreeMain.html">See It work</a> then,
+<a href="/_TreeMain.html">See It work</a> then,
 <span style="color:red">(Ctrl-u) See the source of that page</span><br>
 <img src="/images/mysite_step1.png"/><br>
 So, we need Two Items, and One Container:<br>
@@ -23,18 +23,27 @@ We would simply code:<br>
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
-    &lt;script src="/js/basicNoexport.js"&gt;&lt;/script&gt; &lt;!-- You must correctly link to this js file!!!! --&gt;
+
+    &lt;!-- You must correctly link to this js file!!!! --&gt;
+    &lt;script src="/js/basicNoexport.js"&gt;&lt;/script&gt;
+
     &lt;title&gt;Too Easy To Be True&lt;/title&gt;
 &lt;/head&gt;
-&lt;body onload="start()"&gt;                          &lt;!--you must put onload="start" here!!! or it will do nothing--&gt;
-&lt;liefs id="_TreeMain" contains="Tree|Main" &gt;&lt;/liefs&gt;             &lt;!-- created a container here --&gt;
 
-&lt;div id="Tree" start="200px" style="background-color:red"&gt;&lt;/div&gt; &lt;!-- created an Item here --&gt;
-&lt;div id="Main" start="100%" style="background-color:blue"&gt;&lt;/div&gt; &lt;!-- created an Item here --&gt;
+&lt;!--you must put onload="start" here!!! or it will do nothing--&gt;
+&lt;body onload="start()"&gt;
+
+&lt;!-- created a container here --&gt;
+&lt;liefs id="_TreeMain" contains="Tree|Main" &gt;&lt;/liefs&gt;
+
+&lt;!-- created two Items here --&gt;
+&lt;div id="Tree" start="200px" style="background-color:red"&gt;&lt;/div&gt;
+&lt;div id="Main" start="100%" style="background-color:blue"&gt;&lt;/div&gt;
+
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
 Now all we have to do is fill our div tags with our content, and we can forget about the layout.
 Its all handled automatically.<br>
 Please <span style="color:red">(Ctrl-u)
-    See the source of this page</span> to see how easy it is.<a href="/html/_TreeMain.html">See It work</a><br><br><br>
+    See the source of this page</span> to see how easy it is.<a href="/_TreeMain.html">See It work</a><br><br><br>
