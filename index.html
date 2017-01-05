@@ -2,29 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/run_prettify.js"></script>  <!-- this just highlites code -->
     <script src="/js/basic1.js"></script> <!-- this is the REQUIRED CODE for liefs to work! -->
-    <script src="/js/csi.min.js"></script>       <!-- this lets me import the tree from menu.html -->
-    <script type="text/javascript" script-name="asset" src="http://use.edgefonts.net/asset.js"></script>
-    <script type="text/javascript" script-name="amaranth" src="http://use.edgefonts.net/amaranth.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/liefs.css"> <!-- standard css stuff -->
     <title>Liefs Layout Manager</title>
+    <link rel="stylesheet" type="text/css" href="/css/newindex.css"> <!-- standard css stuff -->
 </head>
 <body onload="start()">
-<liefs id="_master" contains="Header|_both" vertical="true" margin="8"></liefs>
-<liefs id="_both" contains="Tree|Main" start="100%" margin="8"></liefs>
 
-<div id="Header" start="64px">
-    {Liefs_Layout-Manager=}
-</div>
+<div id="header">{Docs Liefs_Layout-Manager=}</div>
+<div id="menu" urlload="/html/loads/menu.html"></div>
 
-<div id="Tree" start="200px">
-    <div data-include="/html/blocks/menu.html"></div>
-</div>
+<div id="welcome" class="m" urlload="/html/loads/welcome.html"></div>
 
-<div id="Main" start="100%">
-    <div data-include="/html/blocks/welcome.html"></div>
-</div>
+<div id="docs" class="m" urlload="/html/loads/docs.html"></div>
+
+<div id="Core" class="m" urlload="/html/loads/core.html"></div>
+
+<div id="newItem" class="m" urlload="/html/loads/newItem.html"></div>
+<div id="newContainer" class="m" urlload="/html/loads/newContainer.html"></div>
+<div id="update" class="m" urlload="/html/loads/update.html"></div>
+
+<div id="Handler" class="m" urlload="/html/loads/handler.html"></div>
+
+<div id="manageArray" class="m" urlload="/html/loads/manageArray.html"></div>
+<div id="use" class="m" urlload="/html/loads/use.html"></div>
+<div id="checkWinWH" class="m" urlload="/html/loads/checkWinWH.html"></div>
+
+<div id="Directive" class="m" urlload="/html/loads/directive.html"></div>
+
+<div id="Misc" class="m" urlload="/html/loads/misc.html"></div>
+
+<div id="urlload" class="m" urlload="/html/loads/urlload.html"></div>
 
 </body>
 </html>
+<script>
+    function setManage(id){
+        V("Cont_" + id, 4,
+                I("header", "40px"),
+                h("menuMain", "100%",
+                        I("menu", "200px"),
+                        I(id, "100%")
+                )
+        );
+        ManageArray = [[ "Cont_" + id ]];
+    }
+    function switchTo(id) {
+        setManage(id);
+        checkWinWH();
+    }
+    window.onload = function () {
+
+        waitForIt(function () {
+                    return (document.getElementById('tdocs'));
+                },
+                function () {
+                    document.getElementById('tdocs').setAttribute("checked", true);
+                });
+        waitForIt(function () {
+                    return window['loadsDone']
+                },
+                function () {
+                    myRequire("/js/run_prettify.js");
+                });
+        for (var each of ["welcome","docs","Core","newItem","newContainer","update","Handler",
+            "manageArray","use","checkWinWH","Directive","Misc","urlload"])
+            I(each,"100%");
+
+        setManage('welcome');
+        use("Cont_welcome");
+        startHandler();
+    }
+</script>

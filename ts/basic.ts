@@ -1,50 +1,78 @@
-export function isIn(obj:any, key:string):boolean{return (key in obj)}
-export function isDefined(thing:any){ return !(thing === undefined)}
-export function asString(it:any):string{if (it['italics'] !== undefined)return <string>it;return undefined;}
-export function asNumber(it:any):number {if (it['toFixed'] !== undefined)return <number>it;return undefined;}
+export function isIn(obj:any, key:string):boolean {
+    return (key in obj)
+}
+export function isDefined(thing:any) {
+    return !(thing === undefined)
+}
+export function asString(it:any):string {
+    if (it['italics'] !== undefined)return <string>it;
+    return undefined;
+}
+export function asNumber(it:any):number {
+    if (it['toFixed'] !== undefined)return <number>it;
+    return undefined;
+}
+export function asArray(it:any):Array<any> {
+    if ((<Array<any>>it).concat !== undefined)return <Array<any>>it;
+    return undefined;
+}
 export interface Item {
     label: string;
     start: string,
     size: Position,
     is_a_container?: Container,
-    el?:Element}
-export function isItem(it:any):boolean{return isDefined(it) && isIn(it,'label') && isIn(it,'start') && isIn(it,'size');}
+    el?:Element
+}
+export function isItem(it:any):boolean {
+    return isDefined(it) && isIn(it, 'label') && isIn(it, 'start') && isIn(it, 'size');
+}
 export interface ItemObject {
-    [index: string]: Item}
+    [index: string]: Item
+}
 export interface Position {
     label?: string,
     x: number,
     y: number,
     width: number,
-    height: number,}
-export function isPosition(it:any){return isIn(it,'x') && isIn(it,'y') && isIn(it,'width') && isIn(it,'height');}
+    height: number,
+}
+export function isPosition(it:any) {
+    return isIn(it, 'x') && isIn(it, 'y') && isIn(it, 'width') && isIn(it, 'height');
+}
 export interface CoordObject {
-    [index: string]: Position}
+    [index: string]: Position
+}
 export interface Container {
     label: string,
     direction: boolean, // 0 is horizontal, 1 is vertical
     items: Item[],
     margin: number,
     size?: Position,
-    el?:Element,}
-export function isContainer(it:any){return isIn(it,'label') && isIn(it,'direction') && isIn(it,'items') && isIn(it,'margin');}
+    el?:Element,
+}
+export function isContainer(it:any) {
+    return isIn(it, 'label') && isIn(it, 'direction') && isIn(it, 'items') && isIn(it, 'margin');
+}
 export interface ContainerObject {
-    [index: string]: Container}
-export function checkItem(item:Item){}
-export function checkContainer(container:Container) {}
-export function newItem(label: string, start: string|number, is_a_container: Container = null): Item {
-    let realstart: string;
+    [index: string]: Container
+}
+export function checkItem(item:Item) {
+}
+export function checkContainer(container:Container) {
+}
+export function newItem(label:string, start:string|number, is_a_container:Container = null):Item {
+    let realstart:string;
     if (asString(start)) realstart = <string>start;
-    else realstart = (<number>start).toString()+"px";
+    else realstart = (<number>start).toString() + "px";
 
-    let new_item: Item = {label: label, start: realstart, size: _newCoordinates()};
+    let new_item:Item = {label: label, start: realstart, size: _newCoordinates()};
     if (eh) checkItem(new_item);
     items[label] = new_item;
     if (is_a_container) items[label]['is_a_container'] = is_a_container;
     if (eh) checkItem(items[label]);
     return items[label];
 }
-export function newContainer(label: string, true_is_hor: boolean, items: Item[], margin: number = 4): Container {
+export function newContainer(label:string, true_is_hor:boolean, items:Item[], margin:number = 4):Container {
     let new_container = {
         label: label,
         direction: true_is_hor, // true is horizontal, false is vertical
@@ -55,54 +83,63 @@ export function newContainer(label: string, true_is_hor: boolean, items: Item[],
     containers[label] = new_container;
     return containers[label];
 }
-export function update(width: number, height: number, container: Container,
-                       x_offset: number = 0, y_offset: number = 0, include_parents: boolean = false):CoordObject {
+export function update(width:number, height:number, container:Container,
+                       x_offset:number = 0, y_offset:number = 0, include_parents:boolean = false):CoordObject {
     return _Private._updateRecursive(width, height, container, x_offset, y_offset, include_parents);
 }
-export let containers: ContainerObject = {};
-export let items: ItemObject = {};
+export let containers:ContainerObject = {};
+export let items:ItemObject = {};
 export let eh:boolean = false; // errorHandling
 export let marginDefault:number = 0;
 export let magrinLast:number = 0;
 
-export function HC(id:string, margin:number = marginDefault, arrayOfItems: Array<Item>):Container{
-    return newContainer("_"+id, true, arrayOfItems ,margin);}
-export function VC(id:string, margin:number = marginDefault, arrayOfItems: Array<Item>):Container{
-    return newContainer("_"+id, false, arrayOfItems, margin);}
-export function I(id:string,start:string, container:Container = undefined):Item {
-    return newItem(id,start,container)}
+export function HC(id:string, margin:number = marginDefault, arrayOfItems:Array<Item>):Container {
+    return newContainer("_" + id, true, arrayOfItems, margin);
+}
+export function VC(id:string, margin:number = marginDefault, arrayOfItems:Array<Item>):Container {
+    return newContainer("_" + id, false, arrayOfItems, margin);
+}
+export function I(id:string, start:string, container:Container = undefined):Item {
+    return newItem(id, start, container)
+}
 export function HI(id:string, start:string, margin:number, arrayOfItems:Array<Item>):Item {
-    return I(id, start, newContainer("_"+id, true, arrayOfItems));}
+    return I(id, start, newContainer("_" + id, true, arrayOfItems));
+}
 export function VI(id:string, start:string, margin:number, arrayOfItems:Array<Item>):Item {
-    return I(id, start, newContainer("_"+id, false, arrayOfItems));}
+    return I(id, start, newContainer("_" + id, false, arrayOfItems));
+}
 export function V(id:string,
-           field2:number|string|Item,
-           field3:number|Item = undefined,
-           ...arrayOfItems: Array<Item>):Container {
-    return <Container>HVC(id, field2, field3, arrayOfItems,VC, VI );}
+                  field2:number|string|Item,
+                  field3:number|Item = undefined,
+                  ...arrayOfItems:Array<Item>):Container {
+    return <Container>HVC(id, field2, field3, arrayOfItems, VC, VI);
+}
 export function H(id:string,
-           field2:number|string|Item,
-           field3:number|Item = undefined,
-           ...arrayOfItems: Array<Item>):Container {
-    return <Container>HVC(id, field2, field3, arrayOfItems,HC, HI );}
+                  field2:number|string|Item,
+                  field3:number|Item = undefined,
+                  ...arrayOfItems:Array<Item>):Container {
+    return <Container>HVC(id, field2, field3, arrayOfItems, HC, HI);
+}
 export function v(id:string,
-           field2:number|string|Item,
-           field3:number|Item = undefined,
-           ...arrayOfItems: Array<Item>):Item {
-    return <Item>HVC(id, field2, field3, arrayOfItems,VC, VI );}
+                  field2:number|string|Item,
+                  field3:number|Item = undefined,
+                  ...arrayOfItems:Array<Item>):Item {
+    return <Item>HVC(id, field2, field3, arrayOfItems, VC, VI);
+}
 export function h(id:string,
-           field2:number|string|Item,
-           field3:number|Item = undefined,
-           ...arrayOfItems: Array<Item>):Item {
-    return <Item>HVC(id, field2, field3, arrayOfItems,HC, HI );}
+                  field2:number|string|Item,
+                  field3:number|Item = undefined,
+                  ...arrayOfItems:Array<Item>):Item {
+    return <Item>HVC(id, field2, field3, arrayOfItems, HC, HI);
+}
 export function HVC(id:string,
-             field2:number|string|Item,
-             field3:number|Item = undefined,
-             arrayOfItems: Array<Item>,
-             Droot2:Function,
-             D2:Function):Container|Item {
-    let margin: number;
-    let start: string;
+                    field2:number|string|Item,
+                    field3:number|Item = undefined,
+                    arrayOfItems:Array<Item>,
+                    Droot2:Function,
+                    D2:Function):Container|Item {
+    let margin:number;
+    let start:string;
     let newarrayOfItems:Array<Item>;
 
     if (asNumber(field2)) {                         // Hroot with margins only case possible
@@ -115,12 +152,12 @@ export function HVC(id:string,
         else
             throw "error";
     }
-    else if(asString(field2))                       // Must be H - then options...
+    else if (asString(field2))                       // Must be H - then options...
     {
-        start =(field2 as string);
-        if(asNumber(field3)) {                      // H - c/w Margins
+        start = (field2 as string);
+        if (asNumber(field3)) {                      // H - c/w Margins
             margin = asNumber(field3);
-            return <Item>D2(id,start,margin,arrayOfItems);
+            return <Item>D2(id, start, margin, arrayOfItems);
         }
         else if (isItem(field3)) {                  // H - no Margins
             return <Item>D2(id, start, undefined, [(field3 as Item)].concat(arrayOfItems));
@@ -134,15 +171,16 @@ export function HVC(id:string,
         return <Container>Droot2(id, undefined, newarrayOfItems.concat(arrayOfItems));
     }
 }
-export function _newCoordinates(width: number = 0, height: number = 0, x: number = 0, y: number = 0, label: string = null): Position {
-    let return_object: Position = <Position>{x: x, y: y, width: width, height: height};
+export function _newCoordinates(width:number = 0, height:number = 0, x:number = 0, y:number = 0, label:string = null):Position {
+    let return_object:Position = <Position>{x: x, y: y, width: width, height: height};
     if (label) return_object['label'] = label;
-    return return_object;}
+    return return_object;
+}
 export class _Private {
-    public static _updateRecursive(width: number, height: number, container: Container,
-                                   x_offset: number = 0, y_offset: number = 0, include_parents: boolean = false): CoordObject {
-        let fixed: number = _Private._fixed(container, width, height);
-        let ReturnObject: CoordObject = {};
+    public static _updateRecursive(width:number, height:number, container:Container,
+                                   x_offset:number = 0, y_offset:number = 0, include_parents:boolean = false):CoordObject {
+        let fixed:number = _Private._fixed(container, width, height);
+        let ReturnObject:CoordObject = {};
         _Private._percent(container, width, height, fixed);
         _Private._fill(container, x_offset, y_offset);
         for (let this_item of container.items) {
@@ -161,10 +199,11 @@ export class _Private {
         }
         return ReturnObject;
     }
-    private static _fixed(container: Container, width: number, height: number): number {
-        let NOT_DEFINED: number = -999;
-        let fixed: number = 0;
-        let new_size: number = NOT_DEFINED;
+
+    private static _fixed(container:Container, width:number, height:number):number {
+        let NOT_DEFINED:number = -999;
+        let fixed:number = 0;
+        let new_size:number = NOT_DEFINED;
         for (let each_item of container.items) {
             if (each_item.start.slice(-2) === "px")
                 new_size = parseInt(each_item.start.slice(0, -2));
@@ -183,10 +222,11 @@ export class _Private {
         }
         return fixed;
     }
-    private static _percent(container: Container, width: number, height: number, fixed: number): void {
-        let pixels_left_for_percent: number;
+
+    private static _percent(container:Container, width:number, height:number, fixed:number):void {
+        let pixels_left_for_percent:number;
         let max = (container.direction) ? width : height;
-        let new_percent_total: number;
+        let new_percent_total:number;
         pixels_left_for_percent = (max - fixed - container.margin * (container.items.length + 1));
         for (let each_item of container.items)
             if ((typeof each_item.start === "string") && each_item.start.slice(-1) === "%") {
@@ -201,9 +241,10 @@ export class _Private {
                 }
             }
     }
-    private static _fill(container: Container, x_offset: number = 0, y_offset: number = 0): void {
+
+    private static _fill(container:Container, x_offset:number = 0, y_offset:number = 0):void {
         let margin = container.margin;
-        let sum: number = margin;
+        let sum:number = margin;
         for (let each_item of container.items) {
             if (container.direction) {
                 each_item.size.x = x_offset + sum;
@@ -218,22 +259,26 @@ export class _Private {
         }
     }
 }
-export let ManageArray: Array<[string,number,number]>;
+export let ManageArray:Array<[string,number,number]>;
 export let ManageCurrent:[string,number,number]|undefined;
-export let winW: number;
-export let winH: number;
-export let CurrentContainer: Container;
+export let winW:number;
+export let winH:number;
+export let CurrentContainer:Container;
 export let CurrentSize:{length:number,width:number};
 export let callback:Function;
-export let DivIdsVisible: Array<string> = [];
-export let DivIdsInvisible: Array<string> = [];
+export let DivIdsVisible:Array<string> = [];
+export let DivIdsInvisible:Array<string> = [];
 export let callbackThrottleId:any;
-export let resizeCallbackThrottle: number = 0;
+export let resizeCallbackThrottle:number = 0;
 export let topDirective:LiefDirective;
-export function el(id:string):HTMLElement {return document.getElementById(id)}
+export let verbose = true;
+export function el(id:string):HTMLElement {
+    return document.getElementById(id)
+}
 export function startHandler() {
-    checkWinWH();
     window.onresize = window_resize;
+    checkLoads();
+    checkWinWH();
 }
 export function stopHandler() {
     window.onresize = () => {
@@ -243,21 +288,24 @@ export function window_resize(e) {
     window.clearTimeout(callbackThrottleId);
     callbackThrottleId = window.setTimeout(checkWinWH, resizeCallbackThrottle);
 }
-export function manageAdd( containerLabel:string,
-                  max_width:number = undefined, max_height:number = undefined): [string,number,number] {
+export function manageAdd(containerLabel:string,
+                          max_width:number = undefined, max_height:number = undefined):[string,number,number] {
     ManageArray.push([containerLabel, max_width, max_height]);
     return [containerLabel, max_width, max_height];
 }
-export function use(ContainerId: string):void {
+export function use(ContainerId:string):void {
     if (ContainerId[0] !== '_')
         ContainerId = '_' + ContainerId;
     if (ContainerId in containers) {
-        CurrentContainer = containers[ContainerId];
-        ShowAndHide();
-        checkWinWH();
-    } else console.log("Container: " + ContainerId.slice(1) + " not Found");
+        if (CurrentContainer !== containers[ContainerId]) {
+            CurrentContainer = containers[ContainerId];
+            if (verbose) console.log("Container " + ContainerId + " found. Setting CurrentContainer");
+            ShowAndHide();
+//        checkWinWH();
+        }
+    } else if (verbose) console.log("Container: " + ContainerId.slice(1) + " not Found");
 }
-export function manageSet(obj: [string,number,number]|undefined = undefined):void {
+export function manageSet(obj:[string,number,number]|undefined = undefined):void {
     if (obj === undefined)
         ManageCurrent = undefined;
     else
@@ -282,57 +330,82 @@ export function checkWinWH():void {
     checkManage([winW, winH]);
     resize_callback([winW, winH]);
 }
-export function checkManage(obj: Array<number>) {
+export function checkManage(obj:Array<number>) {
     let CurrentWidth:number = obj[0];
     let CurrentHeight:number = obj[1];
-    let UseThisManage: boolean;
+    let UseThisManage:boolean;
 
-    if (ManageArray !== undefined) {
+    if (ManageArray) {
+        console.log("Current ManageArray");
+        console.log(ManageArray);
+
         for (let ThisManage of ManageArray) {
             UseThisManage = true;
-            if (ThisManage[1] !== undefined)
+            if (ThisManage[1])
                 UseThisManage = (CurrentWidth <= ThisManage[1]);
-            if (UseThisManage)
-                if (ThisManage[2] !== undefined)
-                    UseThisManage = (CurrentHeight <= ThisManage[2]);
+            if (UseThisManage && ThisManage[2])
+                UseThisManage = (CurrentHeight <= ThisManage[2]);
             if (UseThisManage)
                 if (ThisManage[0] !== CurrentContainer.label) {
+                    console.log("checkManage switch to " + ThisManage[0]);
                     use(ThisManage[0]);
                     break;
                 }
         }
     }
 }
-export function px(p:Position,key:string):string {return p[key].toString()+"px";}
-export function resize_callback(length_width: [number,number]):void {
+export function px(p:Position, key:string):string {
+    return p[key].toString() + "px";
+}
+export function resize_callback(length_width:[number,number]):void {
     CurrentSize = {length: length_width[0], width: length_width[1]};
-    let Coordinates: CoordObject = update(length_width[0], length_width[1], CurrentContainer);
-    let El:HTMLElement ;
+    let Coordinates:CoordObject = update(length_width[0], length_width[1], CurrentContainer);
+    let El:HTMLElement;
     for (let id in Coordinates) {
-        let p: Position = Coordinates[id];
+        let p:Position = Coordinates[id];
         El = el(id);
         if (El !== null) {
             El.style.left = px(p, 'x');
             El.style.top = px(p, 'y');
             El.style.width = px(p, 'width');
             El.style.height = px(p, 'height');
-        }
+        }// else console.log("IT was null!");
     }
     if (callback !== undefined)
         callback(Coordinates);
 }
+
 export function ShowAndHide():void {
+    let index;
+    DivIdsInvisible = [];
+    DivIdsVisible = [];
+    for (let key in items)
+        if (el(key)) {
+            el(key).style.position = "fixed";
+            DivIdsInvisible.push(key);
+        }
+    console.log("Shwo and Hide");
+    console.log(update(1000, 1000, CurrentContainer));
+    for (let key in update(1000, 1000, CurrentContainer)) {
+        index = DivIdsInvisible.indexOf(key);
+        if (index > -1) {
+            DivIdsInvisible.splice(index, 1);
+            DivIdsVisible.push(key);
+        }
+    }
     for (let ItemId of DivIdsVisible)
         smallit(el(ItemId), "visible");
     for (let ItemId of DivIdsInvisible)
         smallit(el(ItemId), "hidden");
 }
 export function smallit(e:HTMLElement, visibility:string):void {
-    e.style.visibility = visibility;
-    e.style.left = "1px";
-    e.style.top = "1px";
-    e.style.width = "1px";
-    e.style.height = "1px";
+    if (e) {
+        e.style.visibility = visibility;
+        e.style.left = "1px";
+        e.style.top = "1px";
+        e.style.width = "1px";
+        e.style.height = "1px";
+    }
 }
 export interface StartDirective {
     id?: string,
@@ -356,7 +429,7 @@ export interface LiefDirectivesObjectOf {
 }
 export function starts():StartDirectivesObjectOf {
     let ret_dict:StartDirectivesObjectOf = {};
-    for (let each of directive('[start]',["id","start","contains"])) {
+    for (let each of directive('[start]', ["id", "start", "contains"])) {
         ret_dict[each['id']] = <StartDirective>each;
         each['el'].style.position = "fixed";
     }
@@ -364,14 +437,15 @@ export function starts():StartDirectivesObjectOf {
 }
 export function liefs():LiefDirectivesObjectOf {
     let ret_dict:LiefDirectivesObjectOf = {};
-    for(let each of  directive('liefs',["margin","callback","contains","vertical","id"])) {
+    for (let each of  directive('liefs', ["margin", "callback", "contains", "vertical", "id"])) {
         if (topDirective === undefined)
             topDirective = <LiefDirective>each;
+        each['margin'] = parseInt(each['margin']);
         ret_dict[each['id']] = <LiefDirective>each;
     }
     return ret_dict;
 }
-export function BuildContainers(): Container {
+export function BuildContainers():Container {
     let Starts:StartDirectivesObjectOf = starts();
     DivIdsVisible = [];
     DivIdsInvisible = [];
@@ -379,29 +453,39 @@ export function BuildContainers(): Container {
         if (Starts[key].tagname !== 'liefs')
             DivIdsInvisible.push(Starts[key].id);
     let temp = liefs();
-    if (topDirective)
+    if (topDirective) {
+        if (verbose) console.log("Building Containers");
         return BuildContainersRecursive(marginDefault, topDirective, temp);
+    }
     return undefined;
 }
-export function BuildContainersRecursive(current_margin: number,
-    liefDirective:LiefDirective,
-    liefDirectivesObjectOf:LiefDirectivesObjectOf): Container {
+export function BuildContainersRecursive(current_margin:number,
+                                         liefDirective:LiefDirective,
+                                         liefDirectivesObjectOf:LiefDirectivesObjectOf):Container {
 
-    let index: number;
-    let ItemList: Array<Item> = [];
-    let thisStart: StartDirective;
+    let index:number;
+    let ItemList:Array<Item> = [];
+    let thisStart:StartDirective;
     let dictStart:StartDirectivesObjectOf = starts();
-    let ret_: Container;
-    let true_is_hor:boolean = false;
+    let ret_:Container;
+    let true_is_hor:boolean = true;
 
-    if (liefDirective.vertical !== undefined)
-        true_is_hor = true;
+    if (liefDirective.vertical) {
+        if (verbose) console.log("Building " + liefDirective.id + " defined as Vertical.");
+//        if (verbose) console.log(liefDirective);
+        true_is_hor = false;
+    } else {
+        if (verbose) console.log("Building " + liefDirective.id + " Assumed Horizontal");
+//        if (verbose) console.log(liefDirective);
 
-    if ('margin' in liefDirective)
+    }
+    if ('margin' in liefDirective) {
         current_margin = liefDirective.margin;
+        if (verbose) console.log("Found margin " + current_margin);
+    } else if (verbose) console.log("Using Default Margin of " + current_margin);
 
     for (let LiefItemId of liefDirective.contains.split("|")) {
-        let new_item: Item;
+        let new_item:Item;
         if (!(LiefItemId in dictStart))
             throw LiefItemId + " Either Missing, or 'start' attribute missing";
         thisStart = dictStart[LiefItemId];
@@ -412,8 +496,10 @@ export function BuildContainersRecursive(current_margin: number,
             DivIdsVisible.push(LiefItemId);
         }
 
-        if (thisStart.contains === null)
+        if (thisStart.contains === null) {
+            if (verbose) console.log("Adding Item " + LiefItemId + "(" + thisStart.start + ")");
             new_item = newItem(LiefItemId, thisStart.start);
+        }
 
         else
             new_item = newItem(LiefItemId, thisStart.start,
@@ -424,47 +510,142 @@ export function BuildContainersRecursive(current_margin: number,
     containers[liefDirective.id] = newContainer(liefDirective.id, true_is_hor, ItemList, current_margin);
     return containers[liefDirective.id];
 }
-
 export interface Directive {
     el:Element,
     tagname:string,
 }
-
 export function Objectassign(obj:Directive):{} {
-    let ro={};
+    let ro = {};
     for (let key in obj) ro[key] = obj[key];
     return ro;
 }
-
-export function directive(querrySelectorAll: string, attributesList: Array<string>): Array<{}> {
+export function directive(querrySelectorAll:string, attributesList:Array<string>):Array<{}> {
     let returnArray:Array<{}> = [];
     let Obj:Directive;
     let NodeList = document.querySelectorAll(querrySelectorAll);
     for (let i = 0; i < NodeList.length; i++) {
-        Obj = {el: NodeList[i], tagname:NodeList[i].tagName};
+        Obj = {el: NodeList[i], tagname: NodeList[i].tagName};
         for (let eachAttribute of attributesList)
             if (NodeList[i].getAttribute(eachAttribute) === undefined) {
                 Obj[eachAttribute] = undefined;
-                if(NodeList[i].id !== undefined)
-                    for(let each in document.querySelectorAll("["+eachAttribute+"]"))
+                if (NodeList[i].id !== undefined)
+                    for (let each in document.querySelectorAll("[" + eachAttribute + "]"))
                         if (each['id'] !== undefined)
                             if (each['id'] === NodeList[i].id)
                                 Obj[eachAttribute] = true;
             }
             else
                 Obj[eachAttribute] = NodeList[i].getAttribute(eachAttribute);
-        returnArray.push( Objectassign(Obj) );
+        returnArray.push(Objectassign(Obj));
     }
     return returnArray;
 }
-export function directiveSetStyles(el: HTMLElement, stylesObject: {}):void {
+export function directiveSetStyles(el:HTMLElement, stylesObject:{}):void {
     for (let key in stylesObject)
         el['style'][key] = stylesObject[key];
 }
-export function start(){
+export function checkLoads() {
+//    console.log(window['loadlist']);
+    if (window['loadlist'] === undefined) window['loadlist'] = [];
+    var newlist = [];
+
+    for (var each of directive("[urlload]", ['urlload', 'id'])) {
+
+        if (window['loadlist'].indexOf(each['id']) === -1) {
+            window['loadlist'].push(each['id']);
+            newlist.push([each['id'], each['urlload']]);
+        }// else console.log(window['loadlist'].indexOf(each['id']));
+    }
+
+    if (newlist.length) {
+        liefloads(newlist);
+        waitForIt(function () {
+                return window['loadsDone']
+            },
+            function () {
+                checkLoads();
+            });
+    }
+}
+export function start() {
     let temp = BuildContainers();
-    if (temp){
+    if (temp) {
         use(temp.label);
+        if (verbose) console.log("Starting Handler");
         startHandler();
-    }    
+    }
+}
+export function loadDoc(eid, page) {
+    var e = document.getElementById("c" + eid);
+    if (e) {
+        console.log("Found " + eid);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                e.innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", page, true);
+        xhttp.send();
+    } else console.log("Not Found " + eid);
+}
+export function liefloads(loads:Array<[string, string]>):void { // Array of [id, url]
+    window['loadsDone'] = false;
+    let e;
+    let eid;
+    let page;
+    let load = loads.pop();
+    eid = load[0];
+    page = load[1];
+    e = document.getElementById(eid);
+    if (e) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            let div;
+            if (this.readyState == 4 && this.status == 200) {
+//                div = document.createElement("div");
+//                div.id = eid + "_Contents";
+//                div.innerHTML = this.responseText;
+//                div.classList.add("Contents");
+//                e.appendChild(div);
+                e.innerHTML = this.responseText;
+                if (loads.length) liefloads(loads); else window['loadsDone'] = true;
+            }
+        };
+        xhttp.open("GET", page, true);
+        xhttp.send();
+    } else console.log("Not Found " + eid);
+}
+export function waitForIt(conditionFunction, actionFunction):void {
+    if (!conditionFunction())
+        window.setTimeout(waitForIt.bind(null, conditionFunction, actionFunction), 100);
+    else
+        actionFunction();
+}
+export function myRequire(url) {
+    var left = [];
+    if (!asString(url)) {
+        console.log("got here");
+        console.log(asArray(url));
+        left = url;
+        url = left.pop();
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', url, false); // <-- the 'false' makes it synchronous
+    ajax.onreadystatechange = function () {
+        var script = ajax.response || ajax.responseText;
+        if (ajax.readyState === 4) {
+            switch (ajax.status) {
+                case 200:
+                    eval.apply(window, [script]);
+                    console.log("script loaded: ", url);
+                    break;
+                default:
+                    console.log("ERROR: script not loaded: ", url);
+            }
+        }
+        if (left.length) if (left.length === 1) myRequire(left[0]); else myRequire(left);
+
+    };
+    ajax.send(null);
 }

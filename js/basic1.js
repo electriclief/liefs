@@ -1,14 +1,37 @@
-function isIn(obj, key) { return (key in obj); }
-function isDefined(thing) { return !(thing === undefined); }
-function asString(it) { if (it['italics'] !== undefined)
-    return it; return undefined; }
-function asNumber(it) { if (it['toFixed'] !== undefined)
-    return it; return undefined; }
-function isItem(it) { return isDefined(it) && isIn(it, 'label') && isIn(it, 'start') && isIn(it, 'size'); }
-function isPosition(it) { return isIn(it, 'x') && isIn(it, 'y') && isIn(it, 'width') && isIn(it, 'height'); }
-function isContainer(it) { return isIn(it, 'label') && isIn(it, 'direction') && isIn(it, 'items') && isIn(it, 'margin'); }
-function checkItem(item) { }
-function checkContainer(container) { }
+function isIn(obj, key) {
+    return (key in obj);
+}
+function isDefined(thing) {
+    return !(thing === undefined);
+}
+function asString(it) {
+    if (it['italics'] !== undefined)
+        return it;
+    return undefined;
+}
+function asNumber(it) {
+    if (it['toFixed'] !== undefined)
+        return it;
+    return undefined;
+}
+function asArray(it) {
+    if (it.concat !== undefined)
+        return it;
+    return undefined;
+}
+function isItem(it) {
+    return isDefined(it) && isIn(it, 'label') && isIn(it, 'start') && isIn(it, 'size');
+}
+function isPosition(it) {
+    return isIn(it, 'x') && isIn(it, 'y') && isIn(it, 'width') && isIn(it, 'height');
+}
+function isContainer(it) {
+    return isIn(it, 'label') && isIn(it, 'direction') && isIn(it, 'items') && isIn(it, 'margin');
+}
+function checkItem(item) {
+}
+function checkContainer(container) {
+}
 function newItem(label, start, is_a_container) {
     if (is_a_container === void 0) { is_a_container = null; }
     var realstart;
@@ -251,9 +274,12 @@ var callbackThrottleId;
 var resizeCallbackThrottle = 0;
 var topDirective;
 var verbose = true;
-function el(id) { return document.getElementById(id); }
+function el(id) {
+    return document.getElementById(id);
+}
 function startHandler() {
     window.onresize = window_resize;
+    checkLoads();
     checkWinWH();
 }
 function stopHandler() {
@@ -315,6 +341,8 @@ function checkManage(obj) {
     var CurrentHeight = obj[1];
     var UseThisManage;
     if (ManageArray) {
+        console.log("Current ManageArray");
+        console.log(ManageArray);
         for (var _i = 0, ManageArray_1 = ManageArray; _i < ManageArray_1.length; _i++) {
             var ThisManage = ManageArray_1[_i];
             UseThisManage = true;
@@ -324,13 +352,16 @@ function checkManage(obj) {
                 UseThisManage = (CurrentHeight <= ThisManage[2]);
             if (UseThisManage)
                 if (ThisManage[0] !== CurrentContainer.label) {
+                    console.log("checkManage switch to " + ThisManage[0]);
                     use(ThisManage[0]);
                     break;
                 }
         }
     }
 }
-function px(p, key) { return p[key].toString() + "px"; }
+function px(p, key) {
+    return p[key].toString() + "px";
+}
 function resize_callback(length_width) {
     CurrentSize = { length: length_width[0], width: length_width[1] };
     var Coordinates = update(length_width[0], length_width[1], CurrentContainer);
@@ -353,8 +384,10 @@ function ShowAndHide() {
     DivIdsInvisible = [];
     DivIdsVisible = [];
     for (var key in items)
-        if (el(key))
+        if (el(key)) {
+            el(key).style.position = "fixed";
             DivIdsInvisible.push(key);
+        }
     console.log("Shwo and Hide");
     console.log(update(1000, 1000, CurrentContainer));
     for (var key in update(1000, 1000, CurrentContainer)) {
@@ -498,6 +531,27 @@ function directiveSetStyles(el, stylesObject) {
     for (var key in stylesObject)
         el['style'][key] = stylesObject[key];
 }
+function checkLoads() {
+    //    console.log(window['loadlist']);
+    if (window['loadlist'] === undefined)
+        window['loadlist'] = [];
+    var newlist = [];
+    for (var _i = 0, _a = directive("[urlload]", ['urlload', 'id']); _i < _a.length; _i++) {
+        var each = _a[_i];
+        if (window['loadlist'].indexOf(each['id']) === -1) {
+            window['loadlist'].push(each['id']);
+            newlist.push([each['id'], each['urlload']]);
+        } // else console.log(window['loadlist'].indexOf(each['id']));
+    }
+    if (newlist.length) {
+        liefloads(newlist);
+        waitForIt(function () {
+            return window['loadsDone'];
+        }, function () {
+            checkLoads();
+        });
+    }
+}
 function start() {
     var temp = BuildContainers();
     if (temp) {
@@ -522,4 +576,72 @@ function loadDoc(eid, page) {
     }
     else
         console.log("Not Found " + eid);
+}
+function liefloads(loads) {
+    window['loadsDone'] = false;
+    var e;
+    var eid;
+    var page;
+    var load = loads.pop();
+    eid = load[0];
+    page = load[1];
+    e = document.getElementById(eid);
+    if (e) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            var div;
+            if (this.readyState == 4 && this.status == 200) {
+                //                div = document.createElement("div");
+                //                div.id = eid + "_Contents";
+                //                div.innerHTML = this.responseText;
+                //                div.classList.add("Contents");
+                //                e.appendChild(div);
+                e.innerHTML = this.responseText;
+                if (loads.length)
+                    liefloads(loads);
+                else
+                    window['loadsDone'] = true;
+            }
+        };
+        xhttp.open("GET", page, true);
+        xhttp.send();
+    }
+    else
+        console.log("Not Found " + eid);
+}
+function waitForIt(conditionFunction, actionFunction) {
+    if (!conditionFunction())
+        window.setTimeout(waitForIt.bind(null, conditionFunction, actionFunction), 100);
+    else
+        actionFunction();
+}
+function myRequire(url) {
+    var left = [];
+    if (!asString(url)) {
+        console.log("got here");
+        console.log(asArray(url));
+        left = url;
+        url = left.pop();
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', url, false); // <-- the 'false' makes it synchronous
+    ajax.onreadystatechange = function () {
+        var script = ajax.response || ajax.responseText;
+        if (ajax.readyState === 4) {
+            switch (ajax.status) {
+                case 200:
+                    eval.apply(window, [script]);
+                    console.log("script loaded: ", url);
+                    break;
+                default:
+                    console.log("ERROR: script not loaded: ", url);
+            }
+        }
+        if (left.length)
+            if (left.length === 1)
+                myRequire(left[0]);
+            else
+                myRequire(left);
+    };
+    ajax.send(null);
 }
