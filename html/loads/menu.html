@@ -1,83 +1,30 @@
-<img src="/images/liefslogo256.png" height="200" width="200">
-<ul>
-    <li>
-        <input type="checkbox" id="tMenu" checked/>
-        <label for="tMenu" onclick="switchTo('welcome')" class="flink">Introduction</label>
-        <a href="/oldindex.html"></a>
+<!-- <img src="/images/liefslogo256.png" height="200" width="200"> -->
+<ul style="padding-left:2px;">
+    <li id="welcomeM" onclick="switchTo('welcome')"><span>Introduction</span></li>
+    <li id="InstallationM" onclick="switchTo('welcome')"><span>Installation</span></li>
+    <li id="docsM" onclick="switchTo('docs')"><span>Docs</span></li>
+    <ul>
+        <li onclick="switchTo('Core')" class="flink"><span>Core</span></li>
         <ul>
-            <li><input type="checkbox" id="cb2"/><label for="cb2">
-                See Liefs Work
-            </label>
-                <ul>
-                    <li><label>Level 3-A</label> Content</li>
-                    <li><label>Level 3-B</label> Content</li>
-                </ul>
-            </li>
-            <li><input type="checkbox" id="cb3"/><label for="cb3">
-                Installation
-            </label>
-                <ul>
-                    <li><input type="checkbox" id="cb5"/><label for="cb5">Level 3-A</label>
-                        <ul>
-                            <li><label>Level 4-A</label> Content</li>
-                            <li><label>Level 4-B</label> Content</li>
-                            <li><label>Level 4-C</label> Content</li>
-                            <li><label>Level 4-D</label> Content</li>
-                        </ul>
-                    </li>
-                    <li><input type="checkbox" id="cb6"/><label for="cb6">Level 3-B</label>
-                        <ul>
-                            <li><label>Level 4-A</label> Content</li>
-                            <li><label>Level 4-B</label> Content</li>
-                        </ul>
-                    </li>
-                    <li><input type="checkbox" id="cb7"/><label for="cb7">Level 3-C</label>
-                        <ul>
-                            <li><label>Level 4-A</label> Content</li>
-                            <li><label>Level 4-B</label> Content</li>
-                            <li><label>Level 4-C</label> Content</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><input type="checkbox" id="tdocs"/>
-                <label for="tdocs" onclick="switchTo('docs')" class="flink">Docs</label>
-                <ul>
-                    <li><input type="checkbox" id="core" />
-                        <label for="core" onclick="switchTo('Core')" class="flink">Core</label>
-                        <ul>
-                            <li><label onclick="switchTo('newItem')" class="flink">newItem()</label></li>
-                            <li><label onclick="switchTo('newContainer')" class="flink">newContainer()</label></li>
-                            <li><label onclick="switchTo('update')" class="flink">update()</label></li>
-                        </ul>
-                    </li>
-                    <li><input type="checkbox" id="handler" checked />
-                        <label for="handler" onclick="switchTo('Handler')" class="flink">Handler</label>
-                        <ul>
-                            <li><label onclick="switchTo('manageArray')" class="flink">ManageArray</label></li>
-                            <li><label onclick="switchTo('use')" class="flink">use()</label></li>
-                            <li><label onclick="switchTo('checkWinWH')" class="flink">checkWinWH()</label></li>
-                        </ul>
-                    </li>
-                    <li><input type="checkbox" id="directive" checked />
-                        <label for="directive" onclick="switchTo('Directive')" class="flink">Directive</label></li>
-                    <ul>
-                        <li></li>
-                    </ul>
-                    <li><input type="checkbox" id="misc" checked />
-                        <label for="misc" onclick="switchTo('Misc')" class="flink">Misc</label></li>
-                    <ul>
-                        <li><label onclick="switchTo('urlload')" class="flink">urlload</label></li>
-                    </ul>
-                </ul>
-            </li>
-            <li><input type="checkbox" id="texamples"/><label for="texamples">Examples</label>
-                <ul>
-                    <li><label onclick='window.location = "/html/examples/example_01.html"' class="flink">Ex1 Simple Container</label></li>
-                    <li><label onclick='window.location = "/html/examples/example_02.html"' class="flink">Ex2 Complex Container</label></li>
-                    <li><label onclick='window.location = "/html/examples/example_03.html"' class="flink">Ex3 Nesting</label></li>
-                </ul>
-            </li>
+            <li onclick="switchTo('newItem')" class="flink"><span>newItem()</span></li>
+            <li onclick="switchTo('newContainer')" class="flink"><span>newContainer()</span></li>
+            <li onclick="switchTo('update')" class="flink"><span>update()</span></li>
         </ul>
-    </li>
+        <li onclick="switchTo('Handler')" class="flink"><span>Handler</span></li>
+        <ul>
+            <li onclick="switchTo('use')" class="flink"><span>use()</span></li>
+            <li onclick="switchTo('checkWinWH')" class="flink"><span>checkWinWH()</span></li>
+        </ul>
+    </ul>
+    <li onclick="switchTo('Directive')" class="flink"><span>Directive</span></li>
+    <li onclick="switchTo('Misc')" class="flink"><span>Misc</span></li>
+    <ul>
+        <li onclick="switchTo('urlload')" class="flink"><span>[urlload]</span></li>
+    </ul>
+    <li><span>Examples</span></li>
+    <ul class="l">
+        <li onclick='window.location = "/html/examples/example_01.html"' class="flink"><span>Simple Container</span></li>
+        <li onclick='window.location = "/html/examples/example_02.html"' class="flink"><span>Complex Container</span></li>
+        <li onclick='window.location = "/html/examples/example_03.html"' class="flink"><span>Nesting</span></li>
+    </ul>
 </ul>

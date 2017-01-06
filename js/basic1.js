@@ -50,7 +50,7 @@ function newItem(label, start, is_a_container) {
     return items[label];
 }
 function newContainer(label, true_is_hor, items, margin) {
-    if (margin === void 0) { margin = 4; }
+    if (margin === void 0) { margin = marginDefault; }
     var new_container = {
         label: label,
         direction: true_is_hor,
