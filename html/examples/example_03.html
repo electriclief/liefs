@@ -15,42 +15,14 @@
     This page is and example of:<br>
     Nesting Containers and Items<br><br>
     Resize this page to see effects<br>
-    View Source of this page <span style="color:red">(Ctrl-u)</span> To understand
+    View Source of this page <span style="color:red">(Ctrl-u)</span> To understand<br><br>
+    Um... This seems too easy...
 </div>
 
 <div id="MainTop">MainTop</div>
 <div id="MainLeft">MainLeft</div>
 
-<div id="MainMid" style="overflow: auto">
-    Complete JavaCode that must be entered to define this page:
-<pre>
-V("Master", 4,
-        h("Top", "80px",
-                I("TopLeft", "100px"),
-                I("TopMid", "100%"),
-                I("TopRight", "100px")
-        ),
-        h("AllMid", "100%",
-                I("Tree", "150px"),
-                v("Mains", "100%",
-                        I("MainTop", "100px"),
-                        h("Hmain", "100%",
-                                I("MainLeft", "15%"),
-                                I("MainMid", "70%"),
-                                I("MainRight", "15%")
-                        ),
-                        I("MainBottom", "100px")
-                )
-        ),
-        h("Bottoms", "100px",
-                I("BottomLeft", "50%"),
-                I("BottomRight", "50%")
-        )
-);
-use("Master");
-startHandler();
-</pre>
-</div>
+<div id="MainMid" style="overflow: auto"></div>
 
 <div id="MainRight">MainRight</div>
 <div id="MainBottom">MainBottom</div>
@@ -61,30 +33,32 @@ startHandler();
 </html>
 <script>
     window.onload = function () {
-        V("Master", 4,
-                h("Top", "80px",
-                        I("TopLeft", "100px"),
-                        I("TopMid", "100%"),
-                        I("TopRight", "100px")
-                ),
-                h("AllMid", "100%",
-                        I("Tree", "150px"),
-                        v("Mains", "100%",
-                                I("MainTop", "100px"),
-                                h("Hmain", "100%",
-                                        I("MainLeft", "15%"),
-                                        I("MainMid", "70%"),
-                                        I("MainRight", "15%")
-                                ),
-                                I("MainBottom", "100px")
-                        )
-                ),
-                h("Bottoms", "100px",
-                        I("BottomLeft", "50%"),
-                        I("BottomRight", "50%")
-                )
-        );
-        use("Master");
-        startHandler();
+        var x='marginDefault=4;\n' +
+                'V("Master",\n' +
+                    '\th("Top", "80px",\n' +
+                        '\t\tI("TopLeft", "100px"),\n' +
+                        '\t\tI("TopMid", "100%"),\n' +
+                        '\t\tI("TopRight", "100px")),\n' +
+                        '\t\th("AllMid", "100%",\n' +
+                            '\t\t\tI("Tree", "150px"),\n' +
+                            '\t\t\tv("Mains", "100%",\n' +
+                                '\t\t\t\tI("MainTop", "100px"),\n' +
+                                '\t\t\t\th("Hmain", "100%",\n' +
+                                    '\t\t\t\t\tI("MainLeft", "15%"),\n' +
+                                    '\t\t\t\t\tI("MainMid", "70%"),\n' +
+                                    '\t\t\t\t\tI("MainRight", "15%")\n' +
+                                '\t\t\t\t),\n' +
+                                '\t\t\t\tI("MainBottom", "100px")\n' +
+                            '\t\t\t)\n' +
+                        '\t\t),\n' +
+                    '\th("Bottoms", "100px",\n' +
+                        '\t\tI("BottomLeft", "50%"),\n' +
+                        '\t\tI("BottomRight", "50%")\n' +
+                    '\t)\n' +
+                ');\n' +
+                'use("Master");\n' +
+                'startHandler();';
+        document.getElementById("MainMid").innerHTML = "Complete JavaCode that must be entered to define this page:<pre>"+x+"</pre>";
+        eval(x);
     }
 </script>
