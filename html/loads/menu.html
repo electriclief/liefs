@@ -1,6 +1,9 @@
 <!-- <img src="/images/liefslogo256.png" height="200" width="200"> -->
 <ul style="padding-left:2px;">
-    <li id="welcomeM" onclick="switchTo('welcome')"><span>Introduction</span></li>
+    <li id="welcomeM" onclick="switchTo('welcome')" class="flink"><span>Introduction</span></li>
+    <ul>
+        <li onclick="switchTo('isTiny')" class="flink"><span>This is Tiny Code</span></li>
+    </ul>
     <li id="InstallationM" onclick="switchTo('welcome')"><span>Installation</span></li>
     <li id="docsM" onclick="switchTo('docs')"><span>Docs</span></li>
     <ul>
@@ -14,6 +17,7 @@
         <ul>
             <li onclick="switchTo('use')" class="flink"><span>use()</span></li>
             <li onclick="switchTo('checkWinWH')" class="flink"><span>checkWinWH()</span></li>
+            <li onclick="switchTo('startHandler')" class="flink"><span>startHandler()</span></li>
         </ul>
     </ul>
     <li onclick="switchTo('Directive')" class="flink"><span>Directive</span></li>

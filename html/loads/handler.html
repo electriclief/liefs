@@ -1,1 +1,55 @@
-Handler
+<h1>Liefs Layout Manager - Handler</h1>
+
+This Project is devided into sections:
+<ol>
+    <li>
+        <span class="flink" onclick="switchTo('Core')">Core</span>
+    </li>
+    <li>
+        <strong style="color:red">Handler</strong>
+    </li>
+    <ol>
+        <li onclick="switchTo('use')" class="flink">use()</li>
+        <li onclick="switchTo('checkWinWH')" class="flink">checkWinWH()</li>
+        <li onclick="switchTo('update')" class="flink">startHandler()</li>
+    </ol>
+    <li>
+        <span class="flink" onclick="switchTo('Directive')">Directive</span>
+    </li>
+    <li>
+        <span class="flink" onclick="switchTo('Misc')">Misc</span>
+    </li>
+</ol>
+
+<p>
+    Handler Uses the Power of <span class="flink" onclick="switchTo('Core')">Liefs Layout Manager Core</span>
+    to Apply these values to the Dom.<br><br>
+    Continuing Our Example From <span class="flink" onclick="switchTo('Core')">Core</span>, We already have everything
+    we need to apply this data to our dom.
+</p>
+<pre class="prettyprint">
+> var o=V("Outer", 4, // using 4px margins...
+            I("Red","220px"),
+            h("Inner","100%",
+                I("Blue","200px"),
+                I("Green","100%")
+            )
+        );
+> update(1920,1080, o);
+{ Red: { x: 4, y: 4, width: 1912, height: 220 },
+  Blue: { x: 4, y: 228, width: 200, height: 848 },
+  Green: { x: 208, y: 228, width: 1708, height: 848 },
+  Inner: { x: 4, y: 228, width: 1912, height: 848 } }
+</pre>
+We simply have to tell Lief Layout Manager to apply this Layout to the Handler, and use it. (Javascript)
+<pre class="prettyprint">
+V("Outer", 4,      // using 4px margins...  Note 'var something=V(...' is optional
+    I("Red","220px"),
+    h("Inner","100%",
+        I("Blue","200px"),
+        I("Green","100%")
+    )
+);
+use("Outer");   // lets Liefs Layout Manager Know "Only" layout to use
+startHandler(); // Start handler (Watching for resize event) stopHandler(); works.... <- buy why would you need to?
+</pre>

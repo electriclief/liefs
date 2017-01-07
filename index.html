@@ -16,6 +16,7 @@
 <div id="feedback" class="con" style="font-size: 75%;background-color: rgba(103, 255, 39, 0.24)"></div>
 
 <div id="welcome" class="m con" urlload="/html/loads/welcome.html">Loading Data...</div>
+<div id="isTiny" class="m con" urlload="/html/loads/isTiny.html">Loading Data...</div>
 
 <div id="docs" class="m con" urlload="/html/loads/docs.html"></div>
 
@@ -30,6 +31,7 @@
 <div id="manageArray" class="m con" urlload="/html/loads/manageArray.html"></div>
 <div id="use" class="m con" urlload="/html/loads/use.html"></div>
 <div id="checkWinWH" class="m con" urlload="/html/loads/checkWinWH.html"></div>
+<div id="startHandler" class="m con" urlload="/html/loads/startHandler.html"></div>
 
 <div id="Directive" class="m con" urlload="/html/loads/directive.html"></div>
 
@@ -77,6 +79,13 @@
     function switchTo(id) {
         setManage(id);
         checkWinWH();
+        var displayUrl=thisUrl;
+        var temp = thisUrl.indexOf("#");
+        if (temp !== -1){
+            displayUrl = thisUrl.slice(0, thisUrl.indexOf("#") );
+        }
+        document.title = "Liefs "+id;
+        window.history.pushState({"html":"#"+id,"pageTitle":'Liefs '+id},"", displayUrl + "#" +id);
     }
     function t(nolist){
         var check=[],uncheck=[];
@@ -112,7 +121,22 @@
             },50);
         }
     }
-    function u(ns){use("_"+ns+"_"+CurrentContainer.label.slice(4));resize_callback([winW, winH]);}
+    function u(ns){
+        var n=CurrentContainer.label.slice(4);
+        use("_"+ns+"_"+n);
+        resize_callback([winW, winH]);}
+
+    window.onpopstate = function(e){
+        if(e.state){
+            if (e.state.html[0]="#"){
+                setManage(e.state.html.slice(1));
+                document.title = "Liefs "+e.state.html.slice(1);
+                checkWinWH();
+            }
+        }
+    };
+
+    var thisUrl= window.location.href.slice(window.location.href.lastIndexOf('/'));
     window.onload = function () {
         marginDefault = 12;
 
@@ -127,7 +151,7 @@
         // This list is required for all divs NOT forced on start definition
         // so leave out menus (always in default), Header, StartPage
         for (var each of ["welcome", "docs", "Core", "newItem", "newContainer", "update", "Handler",
-            "manageArray", "use", "checkWinWH", "Directive", "Misc", "urlload"])
+            "manageArray", "use", "checkWinWH", "Directive", "Misc", "urlload","startHandler","isTiny"])
             I(each, "100%");
 
         callback = function (cordobj) {
@@ -160,5 +184,8 @@
         console.log(containers["_lh_welcome"]);
         use("lh_welcome");
         startHandler();
+        if (thisUrl.indexOf("#") !== -1 ){
+            switchTo(thisUrl.slice(thisUrl.indexOf("#")+1));
+        }
     }
 </script>
