@@ -41,6 +41,8 @@ This Project is devided into sections:
   Green: { x: 208, y: 228, width: 1708, height: 848 },
   Inner: { x: 4, y: 228, width: 1912, height: 848 } }
 </pre>
+<h2 style="color:red">Manual Layout Management</h2>
+<h2 style="color:red">(var) ManageArray = undefined (never set)</h2>
 We simply have to tell Lief Layout Manager to apply this Layout to the Handler, and use it. (Javascript)
 <pre class="prettyprint">
 V("Outer", 4,      // using 4px margins...  Note 'var something=V(...' is optional
@@ -52,4 +54,155 @@ V("Outer", 4,      // using 4px margins...  Note 'var something=V(...' is option
 );
 use("Outer");   // lets Liefs Layout Manager Know "Only" layout to use
 startHandler(); // Start handler (Watching for resize event) stopHandler(); works.... <- buy why would you need to?
+</pre>
+If ManageArray is undefined, then Managing layouts is done "Manually".
+
+Noting: Liefs Layout Manager Tracks Last Screen Size with the Global Varialbes:<br>
+[winW, winH]<br>
+Keeping that in mind,<br>
+Simply trigger a new layout change with:
+<pre class="prettyprint">
+use("NewLayoutIDefinedSomeWhereElse");
+resize_callback([winW, winH]);
+</pre>
+For Example:
+<pre class="prettyprint">
+&lt;button onclick="myLayoutChanger('LayoutName')"&gt;Change to This Layout&lt;/button&gt;
+&lt;button onclick="myLayoutChanger('OtherLayoutName')"&gt;Change to Other Layout&lt;/button&gt;
+
+&lt;script&gt;
+function myLayoutChanger(id){ use(id);resize_callback([winW, winH]); }
+&lt;/script&gt;
+</pre>
+<h2 style="color:red">Automatic Layout Management</h2>
+<h2 style="color:red">ManageArray = [ ["FirstContainer", minx, miny], ... ]</h2>
+Liefs Layout Manager can automatically match the Current Layout Container to rules you define.<br><br>
+The structure of this is in the form of an array.<br><br>
+Each Item in the array, is an array of 3 elements. 1st Name/Id/Label 2nd width, 3rd height<br><br>
+
+Lets Say that we are making a website for "Tiny Screens"<br>
+We Like our "Outer" Container Made Above, but RED just shows ADs, and if<br>
+our users current screen height is less than 600px, we'd rather just "drop" it from view.<br>
+Of Course We could just re-define it:
+<pre class="prettyprint">
+H("Inner","100%",
+    I("Blue","200px"),
+    I("Green","100%")
+);
+</pre>
+But We did that already when we defined "Outer".  This means its already Done.
+So we just need to make our MannageArra:
+<pre class="prettyprint">
+V("Outer", 4,      // using 4px margins...  Note 'var something=V(...' is optional
+    I("Red","220px"),
+    h("Inner","100%",
+        I("Blue","200px"),
+        I("Green","100%")
+    )
+);
+ManageArray = [                // ManageArray is defined now - so after any resize-event, uses this
+    ["Inner", undefined, 600], // First Valid check wins: Is (width:undefined means any valid) and (length<600)
+    ["Outer"]                   // If above check failed, check this.  since always valid, default if no others fit.
+];
+use("Outer");
+startHandler();
+</pre>
+We like 2 layouts... lets go for more.<br>
+Management has deceided that if the screen size is larger than 1440px, they can handle an add pane on right (300px)<br>
+<pre class="prettyprint">
+//////////////////// you could do it this way......
+var outer = v("Outer", "100%",      // using small v - so Item Return, Not Container - No margins!
+                I("Red","220px"),
+                h("Inner","100%",
+                    I("Blue","200px"),
+                    I("Green","100%")
+                )
+            );
+H("OuterAndAdds", 4,
+    outer,                          // varialbe definitions work fine
+    I("AddPane","300px")
+);
+ManageArray = [                // ManageArray is defined now - so after any resize-event, uses this
+    ["Inner", undefined, 600], // First Valid check wins: Is (width:undefined means any valid) and (length<600)
+    ["Outer", 1440],           // If Above fail, and Lenght < 1440px, use this layout
+    ["OuterAndAdds"]           // If above check failed, check this.  since always valid, default if no others fit.
+];
+use("OuterAndAdds");
+startHandler();
+
+//////////////////// or this way......
+
+var outer = v("Outer", "100%",      // using small v - so Item Return, Not Container - No margins!
+                I("Red","220px"),
+                h("Inner","100%",
+                    I("Blue","200px"),
+                    I("Green","100%")
+                )
+            );
+H("OuterAndAdds", 4,
+    items['Outer'],           // items and containers are objects. you call recall any by name/id/label
+    I("AddPane","300px")
+);
+ManageArray = [                // ManageArray is defined now - so after any resize-event, uses this
+    ["Inner", undefined, 600], // First Valid check wins: Is (width:undefined means any valid) and (length<600)
+    ["Outer", 1440],           // If Above fail, and Lenght < 1440px, use this layout
+    ["OuterAndAdds"]           // If above check failed, check this.  since always valid, default if no others fit.
+];
+use("OuterAndAdds");
+startHandler();
+</pre>
+<h2 style="color:red">Automatic Layout Management - Dynamic Change of ManageArray</h2>
+
+We want Manage Array to have two basic layouts:
+<pre class="prettyprint">
+V("Large", 4,                   // our big layout consists of
+    I("Header", "200px"),       // a header on top with Tree and Page below
+    h("Body", "100%",
+        I("ListTree","250px"),  // Tree on the left,
+        I("PageHere","100%"),   // Body on the right.
+    )
+);
+V("Small", 4,                   // In small, no room for tree on left
+    items['Header'],            // Note: If header changes size, use I("Header", newsize)
+    I("SelectTree","50px"),     //
+    items['PageHere']           // Small all three stacked in one column.
+);
+</pre>
+Lets make a function to swap out the "Page Here" part, and add some handlers, and url linkers!
+<pre class="prettyprint">
+var thisUrl= window.location.href.slice(window.location.href.lastIndexOf('/'));
+// above line gets page file name
+function setManage(id) {
+    V("Large_"+id, 4,               // our big layout consists of
+        I("Header", "200px"),       // a header on top with Tree and Page below
+        h("Body", "100%",
+            I("ListTree","250px"),  // Tree on the left,
+            I(id,"100%"),           // Body on the right.
+        )
+    );
+    V("Small_"+id, 4,               // In small, no room for tree on left
+        items['Header'],            // Note: If header changes size, use I("Header", newsize)
+        I("SelectTree","50px"),     //
+        items[id]                   // Small all three stacked in one column.
+    );
+    ManageArray = [
+        ["Small_"+id, 800],
+        ["Large_"+id]
+    ];
+}
+function switchTo(id) {
+    var t="My Title for Page "+id;
+    setManage(id);                  // Use function we just defined above
+    checkWinWH();                   // Check Current Screen Size
+    var displayUrl=thisUrl;
+    if (thisUrl.indexOf("#") !== -1)
+        displayUrl = thisUrl.slice(0, thisUrl.indexOf("#") );
+    document.title = t;
+    window.history.pushState({"html":"#"+id,"pageTitle":t},"", displayUrl + "#" +id);
+}
+window.onload = function () {
+    setManage('Page1');
+    use("Large_Page1");
+    startHandler();
+}
 </pre>
