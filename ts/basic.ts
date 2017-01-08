@@ -1,4 +1,4 @@
-export function isIn(obj:any, key:string):boolean {
+/**/export function isIn(obj:any, key:string):boolean {
     return (key in obj)
 }
 export function isDefined(thing:any) {

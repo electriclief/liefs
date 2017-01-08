@@ -1,4 +1,4 @@
-function isIn(obj, key) {
+/**/function isIn(obj, key) {
     return (key in obj);
 }
 function isDefined(thing) {

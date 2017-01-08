@@ -1,4 +1,4 @@
- function isIn(obj:any, key:string):boolean {
+/**/ function isIn(obj:any, key:string):boolean {
     return (key in obj)
 }
  function isDefined(thing:any) {

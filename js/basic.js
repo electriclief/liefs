@@ -1,4 +1,4 @@
-"use strict";
+/**/"use strict";
 function isIn(obj, key) {
     return (key in obj);
 }

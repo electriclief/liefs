@@ -1,1 +1,1 @@
-[Self Hosting Git Page - Lief Layout Manager](http://liefs.paperplane.io/)
+[Self Hosting Github Website - Lief Layout Manager](http://liefs.paperplane.io/)
