@@ -40,6 +40,40 @@ Define Web Pages By Items and Containers
 See Above Example Work, and how CRAZY easy it is to layout!
 [above example Click This Link, Resize Page A-LOT, then view source page](http://liefs.paperplane.io/html/examples/example_0.html)
 
+The "Try it out" on the right of THIS SCREEN ->
+Copy/Paste This, and try it out!
+
+```
+var l=require("liefs-layout-manager/basic.js")
+var I=l.I,V=l.V,h=l.h,v=l.v,update=l.update;
+var o=V("Master Layout",
+        h("fullhead", "100px",
+                I("head1", "120px"),
+                I("head2", "60%"),
+                I("head3", "100px"),
+                I("head4", "40%")
+        ),
+        h("menu_drop_arts_pic", "100%",
+                I("menu", "100px"),
+                v("drop_arts_pic", "100%",
+                        I("dropdown", "80px"),
+                        h("arts_pics", "100%",
+                                I("article1", "30%"),
+                                I("article2", "40%"),
+                                I("article3", "30%"),
+                                v("pics", "80px",
+                                        I("pic1", "80px"),
+                                        I("pic2", "80px"),
+                                        I("hideme", "100%")
+                                )
+                        )
+                )
+        ),
+        I("footer", "100px")
+);
+JSON.stringify(update(1920,1080,o), undefined, 4);
+```
+
 
 
 
