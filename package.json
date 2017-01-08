@@ -1,7 +1,7 @@
 {
   "name": "liefs-layout-manager",
-  "version": "0.0.0",
-  "description": "Dynamic Layout Manager (in Javascript)",
+  "version": "0.0.1",
+  "description": "Dynamic Layout Manager (Javascript)",
   "main": "index.js",
   "directories": {
     "doc": "docs",
