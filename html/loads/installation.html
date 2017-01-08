@@ -1,0 +1,74 @@
+<h1>Installation</h1>
+
+At the end of the day, Liefs layout manager is a simple Javascript file.
+<table>
+    <tr>
+        <td>
+            basic.ts<br>
+            basic1.ts<br>
+            basic.js<br>
+            basic.min.js<br>
+            basic1.js<br>
+            basic1.min.js<br>
+        </td>
+        <td>
+            *Source of Liefs Layout Manager (Typescript)<br>
+            identical to *Source, but every export statement has been change to standard statement (Typescript)<br>
+            *Source of Liefs Layout Manager (Javascript) >tsc basic.ts To Create This file<br>
+            *uglifyjs basic.js > basic.min.js - uglified version<br>
+            *export free Liefs Layout Manager (Javascript)<br>
+            *uglifyjs basic1.js > basic1.min.js - uglified version<br>
+        </td>
+    </tr>
+    *.ts (Typescript), *.js (Javascript)<br><br>
+
+<h2>Instalation</h2>
+
+<h3>Option #1 - Easy - None</h3>
+Officially, You don't have to install anything to make Liefs Layout Manager work for you.<br>
+Just include <span style="color:red">http://liefs.paperplane.io/js/basic1.js</span> in your html file.<br><br>
+<a href="/html/examples/example_00.html">See The Following Code Work As A Page</a><br>
+(View Source After You Click Above Link)
+<pre  class="prettyprint">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;script src="http://liefs.paperplane.io/js/basic1.js"&gt;&lt;/script&gt; &lt;!-- this is the REQUIRED CODE for liefs to work! --&gt;
+    &lt;title&gt;Example 00 - Bare Bones&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="color:white"&gt;
+
+&lt;div id="Top" style="background-color: red"&gt;"Top": Resize Screen To See Effect&lt;/div&gt;
+&lt;div id="LeftSide" style="background-color: blue"&gt;"LeftSide"&lt;/div&gt;
+&lt;div id="RightSide" style="background-color: green"&gt;"RightSide": View Source Of Page - Its That Easy&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;script&gt;
+    window.onload = function () {
+        marginDefault=4;
+        V("Master",
+                I("Top", "200px"),
+                h("Bottom", "100%",
+                        I("LeftSide", "30%"),
+                        I("RightSide", "70%")
+                )
+        );
+        use("Master");
+        startHandler();
+    }
+&lt;/script&gt;
+</pre>
+
+
+
+
+    <h2>basic</h2>
+    All basic version are intended for require based systems
+    <pre class="prettyprint lang-js">
+
+    </pre>
+</table>
+
+
