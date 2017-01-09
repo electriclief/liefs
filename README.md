@@ -45,7 +45,7 @@ Copy/Paste This, and try it out!
 
 ```
 var l=require("liefs-layout-manager/basic.js")
-var I=l.I,V=l.V,h=l.h,v=l.v,update=l.update;
+var I=l.I,V=l.V,h=l.h,v=l.v,update=l.update,items=l.items,containers=l.containers;
 var o=V("Master Layout",
         h("fullhead", "100px",
                 I("head1", "120px"),
@@ -71,7 +71,11 @@ var o=V("Master Layout",
         ),
         I("footer", "100px")
 );
-JSON.stringify(update(1920,1080,o), undefined, 4);
+/* Too much output to see all at once  comment/uncomment below lines as required */
+
+   JSON.stringify(update(1920,1080,o), undefined, 4);  // see liefs calculate each laout
+// JSON.stringify(items, undefined, 4);                // liefs remembers all items 
+// JSON.stringify(containers, undefined, 4);           // and containers
 ```
 
 

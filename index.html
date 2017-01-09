@@ -88,41 +88,8 @@
         document.title = "Liefs "+id;
         window.history.pushState({"html":"#"+id,"pageTitle":'Liefs '+id},"", displayUrl + "#" +id);
     }
-    function t(nolist){
-        var check=[],uncheck=[];
-        if (asString(nolist) !== undefined) nolist = [nolist];
-        for (var each of ['tdocs','core','handler','directive','misc','texamples']){
-            if (document.getElementById(each) === null) console.log("NOT FOUND "+each);
-            if (nolist.indexOf(each) === -1) {
-                uncheck.push(each);
-//                document.getElementById(each).setAttribute("checked", false);
-                console.log(each+" should be collapsed");
-//                console.log(nolist);
-            }
-            else {
-                check.push(each);
-                document.getElementById(each).setAttribute("checked", true);
-                console.log(each+" should be opened");
-            }
-            setTimeout(function(){
-                for (var eachCheck of check) {
-                    console.log(eachCheck+" before ");
-                    console.log(document.getElementById(eachCheck));
-                    document.getElementById(eachCheck).setAttribute("checked", true);
-                    console.log(eachCheck+" after set to true ");
-                    console.log(document.getElementById(eachCheck));
-                }
-                for (var eachUncheck of uncheck) {
-                    console.log(eachUncheck+" before ");
-                    console.log(document.getElementById(eachUncheck));
-                    document.getElementById(eachUncheck).setAttribute("checked", false);
-                    console.log(eachUncheck+" after set to false ");
-                    console.log(document.getElementById(eachUncheck));
-                }
-            },50);
-        }
-    }
-    function u(ns){
+
+    function myUse(ns){
         var n=CurrentContainer.label.slice(4);
         use("_"+ns+"_"+n);
         resize_callback([winW, winH]);}
@@ -161,18 +128,18 @@
             if (CurrentContainer.label.slice(1,3) === 'sm') {
             feedbackContent = feedbackContent + CurrentContainer.label + " " +
                     "<button style='background-color:lightgreen'>Small</button>&nbsp;" +
-                    "<button onclick=\"u('ls')\">LongShort</button>&nbsp;" +
-                    "<button onclick=\"u('lh')\">LongHign</button>&nbsp;";
+                    "<button onclick=\"myUse('ls')\">LongShort</button>&nbsp;" +
+                    "<button onclick=\"myUse('lh')\">LongHign</button>&nbsp;";
             }
             else if (CurrentContainer.label.slice(1,3) === 'ls') {
                 feedbackContent = feedbackContent + "<br>" + CurrentContainer.label + "<br>" +
-                        "<button onclick=\"u('sm')\">Small</button>&nbsp;" +
+                        "<button onclick=\"myUse('sm')\">Small</button>&nbsp;" +
                         "<button style='background-color:lightgreen'>LongShort</button>&nbsp;" +
-                        "<button onclick=\"u('lh')\">LongHign</button>&nbsp;";
+                        "<button onclick=\"myUse('lh')\">LongHign</button>&nbsp;";
             } else {
                 feedbackContent = feedbackContent+"<br>" + CurrentContainer.label + "<br>" +
-                        "<button onclick=\"u('sm')\">Small</button>&nbsp;" +
-                        "<button onclick=\"u('ls')\">LongShort</button>&nbsp;" +
+                        "<button onclick=\"myUse('sm')\">Small</button>&nbsp;" +
+                        "<button onclick=\"myUse('ls')\">LongShort</button>&nbsp;" +
                         "<button  style='background-color:lightgreen'>LongHigh</button>&nbsp;";
             }
 
@@ -181,8 +148,8 @@
         };
 
         setManage('welcome');
-        console.log("WELCOME");
-        console.log(containers["_lh_welcome"]);
+//        console.log("WELCOME");
+//        console.log(containers["_lh_welcome"]);
         use("lh_welcome");
         startHandler();
         if (thisUrl.indexOf("#") !== -1 ){
