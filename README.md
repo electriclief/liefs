@@ -80,11 +80,28 @@ var o=V("Master Layout",
 
 Just "For Fun" Try This:
 
-Go To: [liefs.paperplane.io/template.html](liefs.paperplane.io/template.html) and Save As -> *somewhere you can remember*
+Get a FREE Html Editor: in the Free pile, I like this one: [Visual Studio](https://www.visualstudio.com/downloads/)
 
-The open it in Notepad on the "left half" of your screen.
-Drag the same file (from explorer) into the "url" of your browser
-Edit left side in notepad, (Ctrl-S for save when change done), then reload page.
+Go To: [liefs.paperplane.io/template.html](liefs.paperplane.io/template.html) and Save As -> *somewhere you can remember*
+lets say, on the Desktop as index.html
+
+![alt text](https://github.com/electriclief/liefs/raw/master/images/step01.png "Simple")
+
+open your html editor with the downloaded file on the left,
+and open your browser draggin the file from your desktop to the url.
+
+ALL SETUP DONE!
+
+Now you can edit/save on the left,
+and refresh-view changes on the right.
+![alt text](https://github.com/electriclief/liefs/raw/master/images/step02.png "Simple")
+
+I bet you can make a web site in no time flat.
+
+
+
+
+
 
 
 
