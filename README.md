@@ -82,7 +82,7 @@ Just "For Fun" Try This:
 
 Get a FREE Html Editor: in the Free pile, I like this one: [Visual Studio](https://www.visualstudio.com/downloads/)
 
-Go To: [liefs.paperplane.io/template.html](liefs.paperplane.io/template.html) and Save As -> *somewhere you can remember*
+Go To: [liefs.paperplane.io/template.html](http://liefs.paperplane.io/template.html) and Save As -> *somewhere you can remember*
 lets say, on the Desktop as index.html
 
 ![alt text](https://github.com/electriclief/liefs/raw/master/images/step01.png "Simple")
