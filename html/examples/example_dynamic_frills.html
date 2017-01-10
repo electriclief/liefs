@@ -13,24 +13,45 @@
     <script src="http://liefs.paperplane.io/js/basic1.js"></script>                   <!-- this is the REQUIRED CODE for liefs to work! -->
     <title>Example Dynamic Layout</title>
 </head>
-<style>div {border-style: solid;border-width: 1px}</style>                               <!-- style to taste -->
-<body style="background-color: violet"><!--females feel my colour schemes are a touch strong-men think they are fine-->
+<style>
+div {border-style: solid;border-width: 1px;border-radius: 5px;}div[id^="Page"] {font-size: 200%}
+#Header{background-color: lightgreen;text-align: center;vertical-align: middle;line-height: 90px;font-size:300%}
+#ListTree {background-color: lightcyan}
+select {width:100%;height:100%;background-color:lightcyan;font-size: 150%}
+ul {list-style-type: none;margin: 0;padding: 0;width: 100%;background-color: lightcyan;}
+li {display: block;color: #000;padding: 8px 16px;text-decoration: none;}
+li:hover {background-color: #555;color: white;}
+#Page1 {background-color: lightblue}
+#Page2 {background-color: lightsteelblue}
+#Page3 {background-color: aliceblue}
+#Page4 {background-color: powderblue}
+
+</style>                               <!-- style to taste -->
+<body>
 
 
 
 
-<div id="Header" style="background-color: lightgreen">100px High, Full Width</div> <!-- Used On Both Layouts -->
+<div id="Header">
+
+    This Is My Giant Title
+
+</div> <!-- Used On Both Layouts -->
 
 
 
 
-<div id="ListTree" style="background-color: lightcyan">
-    <button onclick='switchTo("Page1");'>Page1</button><br>                      <!-- use ANY onclick element -->
-    <button onclick='switchTo("Page2");'>Page2</button><br>                          <!-- concept page only - -->
-    <button onclick='switchTo("Page3");'>Page3</button><br><!--Good, ole dependable button. Nothin beats button-->
-    <button onclick='switchTo("Page4");'>Page4</button><br>
-    <button onclick='window.location="http://liefs.paperplane.io/index.html"'>(link) Docs</button><br><br>
-    <button onclick='myUse("Small")'>Force Small</button><br></div>           <!-- Used Only on Large Layout -->
+<div id="ListTree">
+    <h2 align="center">My Menu</h2>
+    <ul>
+        <li onclick='switchTo("Page1");'>Page1</li>
+        <li onclick='switchTo("Page2");'>Page2</li>
+        <li onclick='switchTo("Page3");'>Page3</li>
+        <li onclick='switchTo("Page4");'>Page4</li>
+        <li onclick='window.location="http://liefs.paperplane.io/index.html"'>(link) Docs</li>
+        <li onclick='myUse("Small")'>Force Small</li>
+    </ul>
+</div>           <!-- Used Only on Large Layout -->
 
 
 
@@ -38,9 +59,8 @@
 
 
 
-<div id="SelectTree" style="background-color: lightcyan">
-    <select style="width:100%;height:100%;background-color:#c6ffb2;font-size: 150%"
-            onchange="onSelectChange(this.value)"><!-- Select Events are handled in our custom function below on this page-->
+<div id="SelectTree">
+    <select onchange="onSelectChange(this.value)"><!-- Select Events are handled in our custom function below on this page-->
         <option value="Page1">Page 1</option>
         <option value="Page2">Page 2</option>
         <option value="Page3">Page 3</option>              <!--Good, ole dependable select. Nothin beats select-->
@@ -53,7 +73,7 @@
 
 
 
-<div id="Page1" style="background-color: lightblue">                    <!-- Obviously put ANYTHING in a div -->
+<div id="Page1">                    <!-- Obviously put ANYTHING in a div -->
     Page 1 Content - Resize Page Width <-- this way --> to switch layouts<br><br>
     <span style="color:red;font-size: 200%">Frills Version!</span><br><br>
     Watch Page Title, Page Url Change and Pushed to Browser Stack<br>Back button works now<br>
@@ -65,7 +85,7 @@
 
 
 
-<div id="Page2" style="background-color: lightsteelblue">
+<div id="Page2">
     Page 2 Content - Resize Page Width <-- this way --> to switch layouts
 </div>
 
@@ -75,7 +95,7 @@
 
 
 
-<div id="Page3" style="background-color: aliceblue">
+<div id="Page3" style="">
     Page 3 Content - Resize Page Width <-- this way --> to switch layouts
 </div>
 
@@ -85,7 +105,7 @@
 
 
 
-<div id="Page4" style="background-color: powderblue">
+<div id="Page4">
     Page 4 Content - Resize Page Width <-- this way --> to switch layouts
 </div>
 
@@ -101,7 +121,7 @@
         V("Large_" + id,                    // our big layout consists of
                 I("Header", "100px"),       // a header on top with Tree and Page below
                 h("Body", "100%",
-                        I("ListTree", "250px"),  // Tree on the left,
+                        I("ListTree", "200px"),  // Tree on the left,
                         I(id, "100%")            // Body on the right.
                 )
         );
@@ -138,7 +158,7 @@ window.onload = function () {
     // Above line is "if url has #, switch to that page                                                          //
 //    });                                                                                           // ...And This...//
 };
-//////////// You probably Dont Need To  Look At The Code Below ///////////////////////////////////////////////////////
+//////////// You probably Don't Need To  Look At The Code Below ///////////////////////////////////////////////////////
 
     var currentId; // lets remember the last Page Div Id Clicked
     function myUse(size) {use(size + "_" + currentId);resize_callback([winW, winH]);} // this is silly notation will fix

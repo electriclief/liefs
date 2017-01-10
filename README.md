@@ -78,6 +78,14 @@ var o=V("Master Layout",
 // JSON.stringify(containers, undefined, 4);           // and containers
 ```
 
+Just "For Fun" Try This:
+
+Go To: [liefs.paperplane.io/template.html](liefs.paperplane.io/template.html) and Save As -> *somewhere you can remember*
+
+The open it in Notepad on the "left half" of your screen.
+Drag the same file (from explorer) into the "url" of your browser
+Edit left side in notepad, (Ctrl-S for save when change done), then reload page.
+
 
 
 
