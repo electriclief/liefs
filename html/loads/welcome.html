@@ -1,8 +1,15 @@
 <h1>Liefs Layout Manager - Introduction</h1><!-- -->
 
-These Docs Are Under Active Edit Until Jan15/2017<br>
+This Documentation Page uses liefs-layout-manager<br>
+This Very Page (View Source) Was intended as a demo on how to use this Manager<br>
+As a result, the load of THIS web page appears slow at best.  That is easily solved<br>
+By manually pasting your urlload's to the divs (makes sense when you view-source this page)<br>
+It is done this way so viewing the source of THIS PAGE is more "readable"<br><br>
+<hr>
+<span style="color:red">
+These Docs Are Under Active Edit Until Jan15/2017</span><br>
 Lets overlook missing pages/obvious mistakes for a week,<br>
-and be super happy the release came ahead of the docs - I bet there is enough here to get you started!<br><br>
+and be super happy the release came ahead of the docs - I bet there is enough here to get you started!<hr>
 
 Liefs Layout Manager is Javascript Code that manages the locations
 of elements on the page.<br><br>(JQuery NOT Required -> but plays friendly)<br><br>
@@ -33,7 +40,7 @@ By doing so, it is able to accomplish these goals:<br>
     </li>
 </ol>
 For example <span style="color:red">THIS VERY PAGE</span> (Ctrl-u to view source)<br>
-would be this: (But It loads all pages into one, so its a bit more, but only a bit)
+Started from this basic template: (But Uses all the <a href="/html/examples/example_dynamic_frills.html">Frills</a>)
 <pre class="prettyprint lang-js" style="font-size: 80%">
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -57,5 +64,5 @@ startHandler();   // Now, watches for screen resize, if so, change style propert
     &lt;div id="menu" urlload="/html/blocks/menu.html"&gt;&lt;/div&gt;     &lt;!-- liefs layout includes urlload in the tags       --&gt;
     &lt;div id="welcome" urlload="/html/docs/welcome.html"&gt;&lt;/div&gt; &lt;!-- This works recursivly until nothing left to load--&gt;
 &lt;/body&gt;
-&lt;/html&gt;
+&lt;/html&gt;   &lt;!-- urlload is a tool for development - I recommend Manually resolving these at point of production --&gt;
 </pre>

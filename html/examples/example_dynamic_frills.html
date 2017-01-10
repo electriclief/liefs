@@ -1,3 +1,4 @@
+
 <!-- Note: All elements (Divs) that are to be use by liefs MUST be defined.
   For example, if you have:
   <div id="idNotUsed"></div>
@@ -9,7 +10,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/basic1.js"></script>                   <!-- this is the REQUIRED CODE for liefs to work! -->
+    <script src="http://liefs.paperplane.io/js/basic1.js"></script>                   <!-- this is the REQUIRED CODE for liefs to work! -->
     <title>Example Dynamic Layout</title>
 </head>
 <style>div {border-style: solid;border-width: 1px}</style>                               <!-- style to taste -->
@@ -22,12 +23,12 @@
     <button onclick='switchTo("Page2");'>Page2</button><br>                          <!-- concept page only - -->
     <button onclick='switchTo("Page3");'>Page3</button><br><!--Good, ole dependable button. Nothin beats button-->
     <button onclick='switchTo("Page4");'>Page4</button><br>
-    <button onclick='window.location="/index.html"'>(link) Docs</button><br><br>
+    <button onclick='window.location="http://liefs.paperplane.io/index.html"'>(link) Docs</button><br><br>
     <button onclick='myUse("Small")'>Force Small</button><br></div>           <!-- Used Only on Large Layout -->
 
 <div id="SelectTree" style="background-color: lightcyan">
     <select style="width:100%;height:100%;background-color:#c6ffb2;font-size: 150%"
-      onchange="onSelectChange(this.value)"><!-- Select Events are handled in our custom function below on this page-->
+            onchange="onSelectChange(this.value)"><!-- Select Events are handled in our custom function below on this page-->
         <option value="Page1">Page 1</option>
         <option value="Page2">Page 2</option>
         <option value="Page3">Page 3</option>              <!--Good, ole dependable select. Nothin beats select-->
@@ -62,7 +63,7 @@
     function myUse(size) {use(size + "_" + currentId);resize_callback([winW, winH]);} // this is silly notation will fix
     // winW and winH are last screen width and height, trigger callback after use set
     function onSelectChange(value) {  // our custom handler for 3 types of choices
-        if (value[0] === '/')                                 window.location = value;// start of / - link
+        if (value[0] === '/')                                 window.location = "http://liefs.paperplane.io"+value;// start of / - link
         else if (containers["_Small_" + value] !== undefined) switchTo(value);        // Defined as Container - Switch
         else                                                  myUse(value);           // Assume "Set Active Container to"
     }
@@ -88,19 +89,13 @@
     }
     function myPageTitle(id) {return "My Title - " + id} // Edit to suit
 
-    function myIndexOf(string, search, occurance, start) { if (occurance) {start = string.indexOf(search, start) + 1;
-        --occurance;if (occurance) return myIndexOf(string.slice(start), search, occurance, start); else
-            return string.slice(start);} else return string;
-    } // This is similar to pure javascript indexOf, I just added an occurance field, So:
-      // myindexOf("http://somesite.domain/I/want/this.html","/",3,0); // return the 3rd occurance of "/" onward
-      // return value: I/want/this.html
-
     function switchTo(id) {  // To make things work, lets build our own custom switch function
         currentId = id;      // make the CurrentId, the one we switched to
         setPage(id);         // see 7 lines up
         checkWinWH();        // triggers resize event
 
         var displayUrl = thisUrl;                                 // This Part of the functions just tells the browser
+        alert(displayUrl + "#" + id);
         var temp = thisUrl.indexOf("#");                          // We are faking a new page (tee hee still this one)
         if (temp !== -1) {                                        // and to push it to the stack
             displayUrl = thisUrl.slice(0, thisUrl.indexOf("#"));  // Its just for "Frills"
@@ -118,21 +113,25 @@
             }
         }
     };
-    var thisUrl = "/"+myIndexOf(window.location.href, "/", 2, 0);
+    var thisUrl = window.location.href;if (thisUrl.slice(0,4) !== "file") thisUrl = "/"+myIndexOf(thisUrl, "/", 2, 0);
+    window.onload = function () {
 //    waitForIt(function () {return window['loadsDone']}, function () {// If Items defined in urlload un-comment this//
-    window.onload = function () {                                                                                    //
         marginDefault = 20; // Margins 4 work well, Margins 0 be CRAZY be carefull with css - can mess things up     //
         for (var eachPage of ['Page1', 'Page2', 'Page3', 'Page4']) defineLayout(eachPage); // see 26 lines up        //
         // by defining all divs in above line, liefs knows to set visibility properly                                //
         // If you add pages, be sure to add the id to the above "for loop" array                                     //
-                                                                                                                     //
+        //
         use("Large_Page1"); //  (will change higher version) needed, then ignored - pick any existing CONTAINER      //
         switchTo('Page1');  //   I'm hoping my function name and arguments aren't too confusing here....             //
         startHandler();     //   Guess what this does!                                                               //
         if (thisUrl.indexOf("#") !== -1 ){switchTo(thisUrl.slice(thisUrl.indexOf("#")+1));}                          //
         // Above line is "if url has #, switch to that page                                                          //
-    };                                                                                                               //
 //    });                                                                                           // ...And This...//
+    };
+    // utility function - has little to do with liefs-layout-manger
+    function myIndexOf(string, search, occurance, start) { if (occurance) {start = string.indexOf(search, start) + 1;
+        --occurance;if (occurance) return myIndexOf(string.slice(start), search, occurance, start); else
+            return string.slice(start);} else return string;}
 </script>
 
 
