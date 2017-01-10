@@ -95,7 +95,6 @@
         checkWinWH();        // triggers resize event
 
         var displayUrl = thisUrl;                                 // This Part of the functions just tells the browser
-        alert(displayUrl + "#" + id);
         var temp = thisUrl.indexOf("#");                          // We are faking a new page (tee hee still this one)
         if (temp !== -1) {                                        // and to push it to the stack
             displayUrl = thisUrl.slice(0, thisUrl.indexOf("#"));  // Its just for "Frills"
