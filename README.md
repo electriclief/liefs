@@ -78,7 +78,9 @@ var o=V("Master Layout",
 // JSON.stringify(containers, undefined, 4);           // and containers
 ```
 
-Just "For Fun" Try This:
+Just "For Fun" Try This: Lets make our own web page thats already set up for:
+Wide Screens, Menu on left, 
+Narrow Screens, Menu above -> Column style website
 
 Get a FREE Html Editor: in the Free pile, I like this one: [Visual Studio](https://www.visualstudio.com/downloads/)
 
